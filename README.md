@@ -27,7 +27,7 @@
 		1433: "mssql",
 		//1521: "oracle",
 		3306: "mysql",
-		//3389: "rdp",
+		3389: "rdp",
 		5432: "postgresql",
 		5985: "winrm",
 		6379: "redis",
@@ -48,6 +48,13 @@
 		11211: "memcached",
 ```
 
+web
+
+```
+tomcat
+phpmyadmin
+```
+
 - 并发数
 
 启动时我们需要控制的唯一参数就是并发数，`-n`指定即可，不指定的话默认为 10。
@@ -60,9 +67,11 @@
 
 445 端口自动会检查 MS-17010和CVE-2020-0796。
 
+tomcat和 phpmyadmin 必须指定`127.0.0.1:8080|tomcat`。
+
 - 输出文件
 
-固定输出文件名为：output.txt
+固定输出文件名为：output.txt。
 
 - 字典
 
@@ -83,24 +92,24 @@
 
 ### 后续计划
 
-- [x] rdp、oracle 协议爆破
-- [x] tomcat、weblogic 等web 弱口令爆破
-- [ ] 加入端口扫描+指纹识别（那么只需要输入 IP 即可一键大保健）
+- [x] rdp、oracle 协议爆破。
+- [x] tomcat、weblogic 等web 弱口令爆破。
+- [ ] 加入端口扫描+指纹识别（那么只需要输入 IP 即可一键大保健）。
 
 ### 更新记录
 
 2021.04.20
 
-- 第一版
+- 第一版。
 
 2021.04.24
 
-- 增加了 wmi爆破和 wmihash 爆破模块
+- 增加了 wmi爆破和 wmihash 爆破模块。
 
 2021.04.30
 
-- mac实现 RDP、oracle，但是 oracle 多次爆破会锁定，因此移除。
-- 增加了 tomcat 和 phpmyadmin，weblogic 多次爆破会锁定账户，因此移除。(ps,`cve-2020-14882`)
+- mac实现 RDP、oracle，但是 oracle 多次爆破会锁定，因此移除。(windows 和 linux 看情况加，反正也没人 star🐶)。
+- 增加了 tomcat 和 phpmyadmin爆破，weblogic 多次爆破会锁定账户，因此移除。(ps,`cve-2020-14882`)。
 - 更新了一波大字典，也能在几分钟内完成。
 
 ### 参考链接
@@ -115,5 +124,5 @@ https://github.com/zsdevX/DarkEye
 
 ---
 
-喜欢的话给个Star吧，希望你不要不识抬举🐶
+喜欢的话给个Star吧，希望你不要不识抬举🐶。
 
