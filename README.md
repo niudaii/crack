@@ -1,4 +1,3 @@
-# go-crack
 ### 声明
 
 仅限用于技术研究和获得正式授权的测试活动。
@@ -84,20 +83,25 @@
 
 ### 后续计划
 
-- [ ] rdp、oracle 协议爆破
-
-- [ ] tomcat、weblogic 等web 弱口令爆破
+- [x] rdp、oracle 协议爆破
+- [x] tomcat、weblogic 等web 弱口令爆破
 - [ ] 加入端口扫描+指纹识别（那么只需要输入 IP 即可一键大保健）
 
 ### 更新记录
 
-2020.04.20
+2021.04.20
 
 - 第一版
 
-2020.04.24
+2021.04.24
 
 - 增加了 wmi爆破和 wmihash 爆破模块
+
+2021.04.30
+
+- mac实现 RDP、oracle，但是 oracle 多次爆破会锁定，因此移除。
+- 增加了 tomcat 和 phpmyadmin，weblogic 多次爆破会锁定账户，因此移除。(ps,`cve-2020-14882`)
+- 更新了一波大字典，也能在几分钟内完成。
 
 ### 参考链接
 
@@ -106,6 +110,8 @@ https://github.com/netxfly/x-crack
 https://github.com/k8gege/LadonGo
 
 https://github.com/shadow1ng/fscan
+
+https://github.com/zsdevX/DarkEye
 
 ---
 
