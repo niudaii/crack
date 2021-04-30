@@ -51,8 +51,8 @@
 web
 
 ```
-tomcat
-phpmyadmin
+		tomcat
+		phpmyadmin
 ```
 
 - 并发数
@@ -67,7 +67,7 @@ phpmyadmin
 
 445 端口自动会检查 MS-17010和CVE-2020-0796。
 
-tomcat和 phpmyadmin 必须指定`127.0.0.1:8080|tomcat`。
+tomcat和 phpmyadmin 必须指定模块，如`127.0.0.1:8080|tomcat`。
 
 - 输出文件
 
