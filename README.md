@@ -108,7 +108,7 @@ tomcat和 phpmyadmin 必须指定模块，如`127.0.0.1:8080|tomcat`。
 
 2021.04.30
 
-- mac实现 RDP、oracle，但是 oracle 多次爆破会锁定，因此移除。(windows 和 linux 看情况加，反正也没人 star🐶)。
+- mac实现 RDP、oracle，但是 oracle 多次爆破会锁定账户，因此移除。(windows 和 linux 看情况加，反正也没人 star🐶，建议下载`Release V1.1`因为支持多平台)。
 - 增加了 tomcat 和 phpmyadmin爆破，weblogic 多次爆破会锁定账户，因此移除。(ps,`cve-2020-14882`)。
 - 更新了一波大字典，也能在几分钟内完成。
 
