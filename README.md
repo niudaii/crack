@@ -109,8 +109,22 @@ tomcat和 phpmyadmin 必须指定模块，如`127.0.0.1:8080|tomcat`。
 2021.04.30
 
 - mac实现 RDP、oracle，但是 oracle 多次爆破会锁定账户，因此移除。(windows 和 linux 看情况加，反正也没人 star🐶，建议下载`Release V1.1`因为支持多平台)。
-- 增加了 tomcat 和 phpmyadmin爆破，weblogic 多次爆破会锁定账户，因此移除。(ps,`cve-2020-14882`)。
+- 增加了 tomcat 和 phpmyadmin爆破，weblogic 多次爆破会锁定账户，因此移除。(ps，`cve-2020-14882`)。
 - 更新了一波大字典，也能在几分钟内完成。
+
+2021.05.15
+
+- 之前确实测试的较少，根据最近实战中遇到的一些问题，增加了一些可选参数
+
+  ```
+  -m "mssql" 指定要爆破的协议模块，可指定多个，比如 -m "mssql,mysql"
+  -u "diyuser.txt" 加载自定义用户名字典，这时不加载爆破的服务对应的用户名字典，仍加载对应的密码字典
+  -p "diypass.txt" 加载自定义密码字典,密码字典支持{user}格式，自动替换为当前爆破任务的用户名,比如{user}@2020，用户名为 admin时变为 admin@2020
+  -i "input.txt" 输入文件
+  -o "output.txt" 输出文件，默认为时间戳
+  ```
+  
+- 修改字典
 
 ### 参考链接
 
