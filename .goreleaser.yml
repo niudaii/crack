@@ -1,0 +1,42 @@
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+- env:
+  - CGO_ENABLED=0
+  goos:
+    - linux
+    - windows
+    - darwin
+  goarch:
+    - amd64
+    - arm64
+    - arm
+    - "386"
+  goarm:
+    - "6"
+    - "7"
+  flags:
+    - -trimpath
+  ldflags:
+    - -s -w
+  ignore:
+    - goos: windows
+      goarch: arm64
+    - goos: windows
+      goarch: arm
+    - goos: linux
+      goarch: mips64
+
+  binary: '{{ .ProjectName }}'
+  main: cmd/crack/crack.go
+
+archives:
+- format: zip
+  replacements:
+      darwin: macOS
+
+checksum:
+  algorithm: sha256
