@@ -1,4 +1,4 @@
-name: 🚨 CodeQL Analysis
+name: CodeQL
 
 on:
   workflow_dispatch:
