@@ -17,7 +17,7 @@
   <a href="https://github.com/niudaii/crack/releases">
     <img src="https://img.shields.io/github/release/niudaii/crack/all.svg?style=flat-square">
   </a>
-  <a href="https://github.com/Becivells/iconhash/releases">
+  <a href="https://github.com/niudaii/crack/releases">
   	<img src="https://img.shields.io/github/downloads/niudaii/crack/total">
   </a>
 </p>

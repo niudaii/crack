@@ -31,7 +31,7 @@ func (r *Runner) Run() {
 	if len(results) > 0 {
 		gologger.Info().Msgf("爆破成功: %v", len(results))
 		for _, result := range results {
-			gologger.Info().Msgf("%v -> %v %v", result.Protocol, result.Addr, result.UserPass)
+			gologger.Print().Msgf("%v -> %v %v", result.Protocol, result.Addr, result.UserPass)
 		}
 	}
 }

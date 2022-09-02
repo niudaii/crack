@@ -108,13 +108,13 @@ func (o *Options) configureOutput() {
 
 func (o *Options) validateOptions() error {
 	if o.Input == "" && o.InputFile == "" {
-		return fmt.Errorf("no service input provided")
+		return fmt.Errorf("No service input provided")
 	}
 	if o.Debug && o.Silent {
-		return fmt.Errorf("both debug and silent mode specified")
+		return fmt.Errorf("Both debug and silent mode specified")
 	}
 	if o.Delay < 0 {
-		return fmt.Errorf("delay can't be negative")
+		return fmt.Errorf("Delay can't be negative")
 	}
 
 	return nil
