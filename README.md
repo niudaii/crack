@@ -42,13 +42,13 @@
 - 支持彩色输出
 - 支持多种输出模式（debug|silent）
 - 全平台支持
-- 全部插件测试用例（pkg/crack/plugins/plugins_test.go）
-- API模式，可参考（internal/runner/runner.go）
+- 全部插件测试用例（[pkg/crack/plugins/plugins_test.go](https://github.com/niudaii/crack/blob/main/pkg/crack/plugins/plugins_test.go)）
+- API调用，可参考（[internal/runner/runner.go](https://github.com/niudaii/crack/blob/main/internal/runner/runner.go)）
 
 ## 使用
 
 ```
-➜  crack git:(main) ✗ ./crack -h                  
+➜  crack ./crack -h
 Cracker
 
 Usage:
