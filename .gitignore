@@ -1,5 +1,6 @@
 .idea/
-cmd/crack/crack
-cmd/crack/crack.txt
 .DS_Store
 dist/
+bin/
+cmd/crack/crack
+cmd/crack/crack.txt
