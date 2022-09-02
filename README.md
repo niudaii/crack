@@ -17,7 +17,11 @@
   <a href="https://github.com/niudaii/crack/releases">
     <img src="https://img.shields.io/github/release/niudaii/crack/all.svg?style=flat-square">
   </a>
+  <a href="https://github.com/Becivells/iconhash/releases">
+  	<img src="https://img.shields.io/github/downloads/niudaii/crack/total">
+  </a>
 </p>
+
 
 ## 功能
 
@@ -34,9 +38,10 @@
   - redis
   - memcached
   - mongodb
-
 - 支持彩色输出
+- 支持多种输出模式
 - 全平台支持
+- 大量测试用例
 
 ## 使用
 
