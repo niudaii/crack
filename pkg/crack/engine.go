@@ -19,14 +19,14 @@ type Engine struct {
 	silent   bool
 }
 
-func NewEngine(threads, timeout, delay int, crackAll, silent bool) *Engine {
+func NewEngine(threads, timeout, delay int, crackAll, silent bool) (*Engine, error) {
 	return &Engine{
 		threads:  threads,
 		timeout:  timeout,
 		delay:    delay,
 		crackAll: crackAll,
 		silent:   silent,
-	}
+	}, nil
 }
 
 type Result struct {

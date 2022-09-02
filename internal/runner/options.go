@@ -11,21 +11,25 @@ import (
 )
 
 type Options struct {
-	Input      string
-	InputFile  string
-	Module     string
-	User       string
-	Pass       string
-	UserFile   string
-	PassFile   string
-	CrackAll   bool
-	Delay      int
-	Threads    int
-	Timeout    int
+	// input
+	Input     string
+	InputFile string
+	Module    string
+	User      string
+	Pass      string
+	UserFile  string
+	PassFile  string
+	// config
+	Threads  int
+	Timeout  int
+	Delay    int
+	CrackAll bool
+	// output
 	OutputFile string
 	NoColor    bool
-	Silent     bool
-	Debug      bool
+	// debug
+	Silent bool
+	Debug  bool
 
 	Targets  []string
 	UserDict []string
@@ -40,19 +44,19 @@ func ParseOptions() *Options {
 
 	flagSet.CreateGroup("input", "Input",
 		flagSet.StringVarP(&options.Input, "input", "i", "", "crack service input(example: -i '127.0.0.1:3306', -i '127.0.0.1:3307|mysql')"),
-		flagSet.StringVarP(&options.InputFile, "input-file", "f", "", "crack service file(example: -f 'xxx.txt')"),
+		flagSet.StringVarP(&options.InputFile, "input-file", "f", "", "crack services file(example: -f 'xxx.txt')"),
 		flagSet.StringVarP(&options.Module, "module", "m", "all", "choose module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb)"),
 		flagSet.StringVar(&options.User, "user", "", "user(example: -user 'admin,root')"),
 		flagSet.StringVar(&options.Pass, "pass", "", "pass(example: -pass 'admin,root')"),
 		flagSet.StringVar(&options.UserFile, "user-file", "", "user file(example: -user-file 'user.txt')"),
 		flagSet.StringVar(&options.PassFile, "pass-file", "", "pass file(example: -pass-file 'pass.txt')"),
-		flagSet.BoolVarP(&options.CrackAll, "crack-all", "", false, "crack all user:pass"),
 	)
 
 	flagSet.CreateGroup("config", "Config",
 		flagSet.IntVar(&options.Threads, "threads", 1, "number of threads"),
-		flagSet.IntVar(&options.Delay, "delay", 0, "delay between requests in seconds (0 to disable)"),
 		flagSet.IntVar(&options.Timeout, "timeout", 10, "timeout in seconds"),
+		flagSet.IntVar(&options.Delay, "delay", 0, "delay between requests in seconds (0 to disable)"),
+		flagSet.BoolVarP(&options.CrackAll, "crack-all", "", false, "crack all user:pass"),
 	)
 
 	flagSet.CreateGroup("output", "Output",

@@ -1,6 +1,7 @@
 package runner
 
 import (
+	"fmt"
 	"github.com/niudaii/crack/pkg/crack"
 	"github.com/projectdiscovery/gologger"
 )
@@ -11,9 +12,13 @@ type Runner struct {
 }
 
 func NewRunner(options *Options) (*Runner, error) {
+	engine, err := crack.NewEngine(options.Threads, options.Timeout, options.Delay, options.CrackAll, options.Silent)
+	if err != nil {
+		return nil, fmt.Errorf("NewEngine err, %v", err)
+	}
 	runner := &Runner{
 		options: options,
-		engine:  crack.NewEngine(options.Threads, options.Timeout, options.Delay, options.CrackAll, options.Silent),
+		engine:  engine,
 	}
 	return runner, nil
 }
