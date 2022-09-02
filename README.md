@@ -40,9 +40,10 @@
   - memcached
   - mongodb
 - 支持彩色输出
-- 支持多种输出模式
+- 支持多种输出模式（debug|silent）
 - 全平台支持
 - 全部插件测试用例（pkg/crack/plugins/plugins_test.go）
+- API模式，可参考（internal/runner/runner.go）
 
 ## 使用
 
