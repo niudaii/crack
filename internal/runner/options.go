@@ -1,6 +1,7 @@
 package runner
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/niudaii/crack/internal/utils"
 	"github.com/projectdiscovery/goflags"
@@ -8,6 +9,7 @@ import (
 	"github.com/projectdiscovery/gologger/formatter"
 	"github.com/projectdiscovery/gologger/levels"
 	"strings"
+	"time"
 )
 
 type Options struct {
@@ -88,70 +90,73 @@ func ParseOptions() *Options {
 	return options
 }
 
-func (options *Options) configureOutput() {
-	if options.NoColor {
+func (o *Options) configureOutput() {
+	if o.NoColor {
 		gologger.DefaultLogger.SetFormatter(formatter.NewCLI(true))
 	}
 
-	if options.Debug {
+	if o.Debug {
 		gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
 	}
 
-	if options.Silent {
+	if o.Silent {
 		gologger.DefaultLogger.SetMaxLevel(levels.LevelSilent)
 	}
 
-	gologger.DefaultLogger.SetWriter(utils.NewCLI(options.OutputFile))
+	gologger.DefaultLogger.SetWriter(utils.NewCLI(o.OutputFile))
 }
 
-func (options *Options) validateOptions() error {
-	if options.Input == "" && options.InputFile == "" {
+func (o *Options) validateOptions() error {
+	if o.Input == "" && o.InputFile == "" {
 		return fmt.Errorf("no service input provided")
 	}
-	if options.Debug && options.Silent {
+	if o.Debug && o.Silent {
 		return fmt.Errorf("both debug and silent mode specified")
 	}
-	if options.Delay < 0 {
+	if o.Delay < 0 {
 		return fmt.Errorf("delay can't be negative")
 	}
 
 	return nil
 }
 
-func (options *Options) configureOptions() error {
+func (o *Options) configureOptions() error {
 	var err error
 	var lines []string
-	if options.Input != "" {
-		options.Targets = append(options.Targets, options.Input)
+	if o.Input != "" {
+		o.Targets = append(o.Targets, o.Input)
 	} else {
-		lines, err = utils.ReadLines(options.InputFile)
+		lines, err = utils.ReadLines(o.InputFile)
 		if err != nil {
 			return err
 		}
-		options.Targets = append(options.Targets, lines...)
+		o.Targets = append(o.Targets, lines...)
 	}
 
-	if options.User != "" {
-		options.UserDict = strings.Split(options.User, ",")
+	if o.User != "" {
+		o.UserDict = strings.Split(o.User, ",")
 	}
-	if options.Pass != "" {
-		options.PassDict = strings.Split(options.Pass, ",")
+	if o.Pass != "" {
+		o.PassDict = strings.Split(o.Pass, ",")
 	}
-	if options.UserFile != "" {
-		if options.UserDict, err = utils.ReadLines(options.UserFile); err != nil {
+	if o.UserFile != "" {
+		if o.UserDict, err = utils.ReadLines(o.UserFile); err != nil {
 			return err
 		}
 	}
-	if options.PassFile != "" {
-		if options.PassDict, err = utils.ReadLines(options.PassFile); err != nil {
+	if o.PassFile != "" {
+		if o.PassDict, err = utils.ReadLines(o.PassFile); err != nil {
 			return err
 		}
 	}
 
-	options.Targets = utils.RemoveDuplicate(options.Targets)
-	options.UserDict = utils.RemoveDuplicate(options.UserDict)
-	options.PassDict = utils.RemoveDuplicate(options.PassDict)
-	gologger.Debug().Msgf("%+v", options)
+	o.Targets = utils.RemoveDuplicate(o.Targets)
+	o.UserDict = utils.RemoveDuplicate(o.UserDict)
+	o.PassDict = utils.RemoveDuplicate(o.PassDict)
+
+	gologger.Info().Msgf("当前时间: %v", time.Now().Format("2006-01-02 15:04:05"))
+	opt, _ := json.Marshal(o)
+	gologger.Debug().Msgf("当前配置: %v", string(opt))
 
 	return nil
 }

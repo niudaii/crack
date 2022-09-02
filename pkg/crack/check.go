@@ -12,10 +12,9 @@ import (
 // CheckAlive 存活检测
 func (e *Engine) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 	if len(addrs) == 0 {
-		gologger.Info().Msgf("当前目标为空")
+		gologger.Info().Msgf("目标为空")
 		return
 	}
-	gologger.Info().Msgf("当前时间: %v", time.Now().Format("2006-01-02 15:04:05"))
 	gologger.Info().Msgf("存活探测")
 	// RunTask
 	mutex := &sync.Mutex{}
