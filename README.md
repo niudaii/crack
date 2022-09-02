@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/license-MIT-_red.svg">
   </a>
   <a href="https://goreportcard.com/badge/github.com/niudaii/crack">
-    <img src="https://goreportcard.com/badge/github.com/niudaii/crack">		
+    <img src="https://goreportcard.com/badge/github.com/niudaii/crack?style=flat-square">		
   </a>
   <a href="https://github.com/niudaii/crack/actions">
     <img src="https://img.shields.io/github/workflow/status/niudaii/crack/Release?style=flat-square" alt="Github Actions">
