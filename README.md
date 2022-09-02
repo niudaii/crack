@@ -8,11 +8,11 @@
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-_red.svg">
   </a>
-  <a href="https://github.com/niudaii/crack/actions">
-    <img src="https://img.shields.io/github/workflow/status/niudaii/crack/Release?style=flat-square" alt="Github Actions">
-  </a>
   <a href="https://goreportcard.com/badge/github.com/niudaii/crack">
     <img src="https://goreportcard.com/badge/github.com/niudaii/crack">		
+  </a>
+  <a href="https://github.com/niudaii/crack/actions">
+    <img src="https://img.shields.io/github/workflow/status/niudaii/crack/Release?style=flat-square" alt="Github Actions">
   </a>
   <a href="https://github.com/niudaii/crack/releases">
     <img src="https://img.shields.io/github/release/niudaii/crack/all.svg?style=flat-square">
@@ -29,6 +29,7 @@
   - ftp
   - ssh
   - wmi
+  - wmihash
   - smb
   - mssql
   - oracle
@@ -41,7 +42,7 @@
 - 支持彩色输出
 - 支持多种输出模式
 - 全平台支持
-- 大量测试用例
+- 全部插件测试用例（pkg/crack/plugins/plugins_test.go）
 
 ## 使用
 
