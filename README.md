@@ -39,6 +39,7 @@
   - redis
   - memcached
   - mongodb
+- 多线程爆破，支持进度条
 - 支持彩色输出
 - 支持多种输出模式（debug|silent）
 - 全平台支持
@@ -79,7 +80,9 @@ DEBUG:
    -debug   show debug output
 ```
 
+## 截图
 
+![image-20220903092817097](https://nnotes.oss-cn-hangzhou.aliyuncs.com/notes/image-20220903092817097.png)
 
 ## 参考
 
