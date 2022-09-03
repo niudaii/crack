@@ -12,7 +12,7 @@ const banner = `
 	  ` + Version + ` by zp857
 `
 
-const Version = `v2.0`
+const Version = `v2.1`
 
 func showBanner() {
 	gologger.Print().Msgf("%v\n", banner)
