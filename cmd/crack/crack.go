@@ -15,5 +15,5 @@ func main() {
 	start := time.Now()
 	gologger.Info().Msgf("当前时间: %v", start.Format("2006-01-02 15:04:05"))
 	newRunner.Run()
-	gologger.Info().Msgf("花费时间: %v", time.Since(start))
+	gologger.Info().Msgf("运行时间: %v", time.Since(start))
 }

@@ -8,17 +8,17 @@ import (
 
 type Runner struct {
 	options *Options
-	engine  *crack.Engine
+	runner  *crack.Runner
 }
 
 func NewRunner(options *Options) (*Runner, error) {
-	engine, err := crack.NewEngine(options.Threads, options.Timeout, options.Delay, options.CrackAll, options.Silent)
+	runner, err := crack.NewRunner(options.Threads, options.Timeout, options.Delay, options.CrackAll, options.Silent)
 	if err != nil {
-		return nil, fmt.Errorf("NewEngine err, %v", err)
+		return nil, fmt.Errorf("NewRunner err, %v", err)
 	}
 	runner := &Runner{
 		options: options,
-		engine:  engine,
+		runner:  runner,
 	}
 	return runner, nil
 }
@@ -26,8 +26,8 @@ func NewRunner(options *Options) (*Runner, error) {
 func (r *Runner) Run() {
 	addrs := crack.ParseTargets(r.options.Targets)
 	addrs = crack.FilterModule(addrs, r.options.Module)
-	addrs = r.engine.CheckAlive(addrs)
-	results := r.engine.Run(addrs, r.options.UserDict, r.options.PassDict)
+	addrs = r.runner.CheckAlive(addrs)
+	results := r.runner.Run(addrs, r.options.UserDict, r.options.PassDict)
 	if len(results) > 0 {
 		gologger.Info().Msgf("爆破成功: %v", len(results))
 		for _, result := range results {

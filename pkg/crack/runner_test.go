@@ -22,7 +22,7 @@ func TestCrackAll(t *testing.T) {
 		PASS
 		ok  	crack/pkg/crack	0.036s
 	*/
-	tests := map[string]*Engine{
+	tests := map[string]*Runner{
 		"false": {
 			threads:  2,
 			timeout:  10,
@@ -43,9 +43,9 @@ func TestCrackAll(t *testing.T) {
 	}
 	userDict := []string{"root", "test_user"}
 	passDict := []string{"123456", "test2022@"}
-	for name, engine := range tests {
+	for name, runner := range tests {
 		t.Run(name, func(t *testing.T) {
-			engine.Run(addrs, userDict, passDict)
+			runner.Run(addrs, userDict, passDict)
 		})
 	}
 }

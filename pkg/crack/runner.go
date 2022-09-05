@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type Engine struct {
+type Runner struct {
 	threads  int
 	timeout  int
 	delay    int
@@ -19,8 +19,8 @@ type Engine struct {
 	silent   bool
 }
 
-func NewEngine(threads, timeout, delay int, crackAll, silent bool) (*Engine, error) {
-	return &Engine{
+func NewRunner(threads, timeout, delay int, crackAll, silent bool) (*Runner, error) {
+	return &Runner{
 		threads:  threads,
 		timeout:  timeout,
 		delay:    delay,
@@ -41,14 +41,14 @@ type IpAddr struct {
 	Protocol string
 }
 
-func (e *Engine) Run(addrs []*IpAddr, userDict []string, passDict []string) (results []*Result) {
+func (r *Runner) Run(addrs []*IpAddr, userDict []string, passDict []string) (results []*Result) {
 	for _, addr := range addrs {
-		results = append(results, e.Crack(addr, userDict, passDict)...)
+		results = append(results, r.Crack(addr, userDict, passDict)...)
 	}
 	return
 }
 
-func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (results []*Result) {
+func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (results []*Result) {
 	gologger.Info().Msgf("开始爆破: %v:%v %v", addr.Ip, addr.Port, addr.Protocol)
 
 	var tasks []plugins.Service
@@ -78,7 +78,7 @@ func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 				Protocol: addr.Protocol,
 				User:     user,
 				Pass:     pass,
-				Timeout:  e.timeout,
+				Timeout:  r.timeout,
 			})
 		}
 	}
@@ -86,8 +86,8 @@ func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 	stopHashMap := map[string]bool{}
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
-	taskChan := make(chan plugins.Service, e.threads)
-	for i := 0; i < e.threads; i++ {
+	taskChan := make(chan plugins.Service, r.threads)
+	for i := 0; i < r.threads; i++ {
 		go func() {
 			for task := range taskChan {
 				addrStr := fmt.Sprintf("%v:%v", addr.Ip, addr.Port)
@@ -106,7 +106,7 @@ func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 				resp := scanFunc(&task)
 				switch resp {
 				case plugins.CrackSuccess:
-					if !e.crackAll {
+					if !r.crackAll {
 						mutex.Lock()
 						stopHashMap[addrHash] = true
 						mutex.Unlock()
@@ -123,15 +123,15 @@ func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 					mutex.Unlock()
 				case plugins.CrackFail:
 				}
-				if e.delay > 0 {
-					time.Sleep(time.Duration(e.delay) * time.Second)
+				if r.delay > 0 {
+					time.Sleep(time.Duration(r.delay) * time.Second)
 				}
 				wg.Done()
 			}
 		}()
 	}
 
-	if e.silent {
+	if r.silent {
 		for _, task := range tasks {
 			wg.Add(1)
 			taskChan <- task
@@ -149,6 +149,6 @@ func (e *Engine) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 	wg.Wait()
 
 	gologger.Info().Msgf("爆破结束")
-	
+
 	return
 }

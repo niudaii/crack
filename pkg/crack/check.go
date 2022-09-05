@@ -10,7 +10,7 @@ import (
 )
 
 // CheckAlive 存活检测
-func (e *Engine) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
+func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 	if len(addrs) == 0 {
 		gologger.Info().Msgf("目标为空")
 		return
@@ -57,7 +57,7 @@ func (e *Engine) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 }
 
 // conn 建立tcp连接
-func (e *Engine) conn(ipAddr *IpAddr) (alive bool) {
+func (e *Runner) conn(ipAddr *IpAddr) (alive bool) {
 	_, err := net.DialTimeout("tcp", fmt.Sprintf("%v:%v", ipAddr.Ip, ipAddr.Port), time.Duration(e.timeout)*time.Second)
 	if err == nil {
 		alive = true

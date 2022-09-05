@@ -50,7 +50,7 @@
 
 ```
 ➜  crack ./crack -h
-Cracker
+Service cracker
 
 Usage:
   ./crack [flags]
@@ -58,18 +58,18 @@ Usage:
 Flags:
 INPUT:
    -i, -input string       crack service input(example: -i '127.0.0.1:3306', -i '127.0.0.1:3307|mysql')
-   -f, -input-file string  crack service file(example: -f 'xxx.txt')
+   -f, -input-file string  crack services file(example: -f 'xxx.txt')
    -m, -module string      choose module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb) (default "all")
    -user string            user(example: -user 'admin,root')
    -pass string            pass(example: -pass 'admin,root')
    -user-file string       user file(example: -user-file 'user.txt')
    -pass-file string       pass file(example: -pass-file 'pass.txt')
-   -crack-all              crack all user:pass
 
 CONFIG:
    -threads int  number of threads (default 1)
-   -delay int    delay between requests in seconds (0 to disable)
    -timeout int  timeout in seconds (default 10)
+   -delay int    delay between requests in seconds (0 to disable)
+   -crack-all    crack all user:pass
 
 OUTPUT:
    -o, -output string  output file to write found results (default "crack.txt")
