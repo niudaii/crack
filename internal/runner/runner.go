@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/niudaii/crack/pkg/crack"
 	"github.com/projectdiscovery/gologger"
-	"time"
 )
 
 type Runner struct {
@@ -31,8 +30,6 @@ func NewRunner(options *Options) (*Runner, error) {
 }
 
 func (r *Runner) Run() {
-	start := time.Now()
-	gologger.Info().Msgf("当前时间: %v", start.Format("2006-01-02 15:04:05"))
 	// 解析目标
 	addrs := crack.ParseTargets(r.options.Targets)
 	addrs = crack.FilterModule(addrs, r.options.Module)
@@ -52,6 +49,4 @@ func (r *Runner) Run() {
 			gologger.Print().Msgf("%v -> %v %v", result.Protocol, result.Addr, result.UserPass)
 		}
 	}
-	// 运行时间
-	gologger.Info().Msgf("运行时间: %v", time.Since(start))
 }

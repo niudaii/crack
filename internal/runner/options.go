@@ -41,12 +41,12 @@ func ParseOptions() *Options {
 	options := &Options{}
 
 	flagSet := goflags.NewFlagSet()
-	flagSet.SetDescription(`Cracker`)
+	flagSet.SetDescription(`Service cracker`)
 
 	flagSet.CreateGroup("input", "Input",
 		flagSet.StringVarP(&options.Input, "input", "i", "", "crack service input(example: -i '127.0.0.1:3306', -i '127.0.0.1:3307|mysql')"),
 		flagSet.StringVarP(&options.InputFile, "input-file", "f", "", "crack services file(example: -f 'xxx.txt')"),
-		flagSet.StringVarP(&options.Module, "module", "m", "all", "choose module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb)"),
+		flagSet.StringVarP(&options.Module, "module", "m", "all", "choose one module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb)"),
 		flagSet.StringVar(&options.User, "user", "", "user(example: -user 'admin,root')"),
 		flagSet.StringVar(&options.Pass, "pass", "", "pass(example: -pass 'admin,root')"),
 		flagSet.StringVar(&options.UserFile, "user-file", "", "user file(example: -user-file 'user.txt')"),
@@ -89,6 +89,7 @@ func ParseOptions() *Options {
 	return options
 }
 
+// configureOutput 配置输出
 func (o *Options) configureOutput() {
 	if o.NoColor {
 		gologger.DefaultLogger.SetFormatter(formatter.NewCLI(true))
@@ -105,6 +106,7 @@ func (o *Options) configureOutput() {
 	gologger.DefaultLogger.SetWriter(utils.NewCLI(o.OutputFile))
 }
 
+// validateOptions 验证选项
 func (o *Options) validateOptions() error {
 	if o.Input == "" && o.InputFile == "" {
 		return fmt.Errorf("No service input provided")
@@ -119,19 +121,19 @@ func (o *Options) validateOptions() error {
 	return nil
 }
 
+// configureOptions 配置选项
 func (o *Options) configureOptions() error {
 	var err error
-	var lines []string
 	if o.Input != "" {
 		o.Targets = append(o.Targets, o.Input)
 	} else {
+		var lines []string
 		lines, err = utils.ReadLines(o.InputFile)
 		if err != nil {
 			return err
 		}
 		o.Targets = append(o.Targets, lines...)
 	}
-
 	if o.User != "" {
 		o.UserDict = strings.Split(o.User, ",")
 	}
@@ -148,11 +150,11 @@ func (o *Options) configureOptions() error {
 			return err
 		}
 	}
-
+	// 去重
 	o.Targets = utils.RemoveDuplicate(o.Targets)
 	o.UserDict = utils.RemoveDuplicate(o.UserDict)
 	o.PassDict = utils.RemoveDuplicate(o.PassDict)
-
+	// 打印配置
 	opt, _ := json.Marshal(o)
 	gologger.Debug().Msgf("当前配置: %v", string(opt))
 
