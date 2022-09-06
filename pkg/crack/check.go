@@ -3,7 +3,6 @@ package crack
 import (
 	"fmt"
 	"github.com/cheggaaa/pb/v3"
-	"github.com/projectdiscovery/gologger"
 	"net"
 	"sync"
 	"time"
@@ -11,11 +10,6 @@ import (
 
 // CheckAlive 存活检测
 func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
-	if len(addrs) == 0 {
-		gologger.Info().Msgf("目标为空")
-		return
-	}
-	gologger.Info().Msgf("存活探测")
 	// RunTask
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
@@ -38,8 +32,6 @@ func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 			wg.Add(1)
 			taskChan <- task
 		}
-		close(taskChan)
-		wg.Wait()
 	} else {
 		bar := pb.StartNew(len(addrs))
 		for _, task := range addrs {
@@ -48,11 +40,10 @@ func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 			taskChan <- task
 		}
 		close(taskChan)
-		wg.Wait()
-		bar.Finish()
 	}
+	close(taskChan)
+	wg.Wait()
 
-	gologger.Info().Msgf("存活数量: %v", len(results))
 	return
 }
 

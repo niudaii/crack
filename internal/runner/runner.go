@@ -26,7 +26,13 @@ func NewRunner(options *Options) (*Runner, error) {
 func (r *Runner) Run() {
 	addrs := crack.ParseTargets(r.options.Targets)
 	addrs = crack.FilterModule(addrs, r.options.Module)
+	if len(addrs) == 0 {
+		gologger.Info().Msgf("目标为空")
+		return
+	}
+	gologger.Info().Msgf("存活探测")
 	addrs = r.crackRunner.CheckAlive(addrs)
+	gologger.Info().Msgf("存活数量: %v", len(addrs))
 	results := r.crackRunner.Run(addrs, r.options.UserDict, r.options.PassDict)
 	if len(results) > 0 {
 		gologger.Info().Msgf("爆破成功: %v", len(results))
