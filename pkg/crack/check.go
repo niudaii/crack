@@ -9,15 +9,15 @@ import (
 )
 
 // CheckAlive 存活检测
-func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
+func (r *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 	// RunTask
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
-	taskChan := make(chan *IpAddr, e.threads*2)
-	for i := 0; i < e.threads; i++ {
+	taskChan := make(chan *IpAddr, r.options.Threads)
+	for i := 0; i < r.options.Threads; i++ {
 		go func() {
 			for task := range taskChan {
-				if e.conn(task) {
+				if r.conn(task) {
 					mutex.Lock()
 					results = append(results, task)
 					mutex.Unlock()
@@ -27,11 +27,13 @@ func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 		}()
 	}
 
-	if e.silent {
+	if r.options.Silent {
 		for _, task := range addrs {
 			wg.Add(1)
 			taskChan <- task
 		}
+		close(taskChan)
+		wg.Wait()
 	} else {
 		bar := pb.StartNew(len(addrs))
 		for _, task := range addrs {
@@ -40,16 +42,16 @@ func (e *Runner) CheckAlive(addrs []*IpAddr) (results []*IpAddr) {
 			taskChan <- task
 		}
 		close(taskChan)
+		wg.Wait()
+		bar.Finish()
 	}
-	close(taskChan)
-	wg.Wait()
 
 	return
 }
 
 // conn 建立tcp连接
-func (e *Runner) conn(ipAddr *IpAddr) (alive bool) {
-	_, err := net.DialTimeout("tcp", fmt.Sprintf("%v:%v", ipAddr.Ip, ipAddr.Port), time.Duration(e.timeout)*time.Second)
+func (r *Runner) conn(ipAddr *IpAddr) (alive bool) {
+	_, err := net.DialTimeout("tcp", fmt.Sprintf("%v:%v", ipAddr.Ip, ipAddr.Port), time.Duration(r.options.Timeout)*time.Second)
 	if err == nil {
 		alive = true
 	}

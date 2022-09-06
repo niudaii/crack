@@ -11,21 +11,21 @@ import (
 	"time"
 )
 
-type Runner struct {
-	threads  int
-	timeout  int
-	delay    int
-	crackAll bool
-	silent   bool
+type Options struct {
+	Threads  int
+	Timeout  int
+	Delay    int
+	CrackAll bool
+	Silent   bool
 }
 
-func NewRunner(threads, timeout, delay int, crackAll, silent bool) (*Runner, error) {
+type Runner struct {
+	options *Options
+}
+
+func NewRunner(options *Options) (*Runner, error) {
 	return &Runner{
-		threads:  threads,
-		timeout:  timeout,
-		delay:    delay,
-		crackAll: crackAll,
-		silent:   silent,
+		options: options,
 	}, nil
 }
 
@@ -78,7 +78,7 @@ func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 				Protocol: addr.Protocol,
 				User:     user,
 				Pass:     pass,
-				Timeout:  r.timeout,
+				Timeout:  r.options.Timeout,
 			})
 		}
 	}
@@ -86,8 +86,8 @@ func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 	stopHashMap := map[string]bool{}
 	mutex := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
-	taskChan := make(chan plugins.Service, r.threads)
-	for i := 0; i < r.threads; i++ {
+	taskChan := make(chan plugins.Service, r.options.Threads)
+	for i := 0; i < r.options.Threads; i++ {
 		go func() {
 			for task := range taskChan {
 				addrStr := fmt.Sprintf("%v:%v", addr.Ip, addr.Port)
@@ -106,7 +106,7 @@ func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 				resp := scanFunc(&task)
 				switch resp {
 				case plugins.CrackSuccess:
-					if !r.crackAll {
+					if !r.options.CrackAll {
 						mutex.Lock()
 						stopHashMap[addrHash] = true
 						mutex.Unlock()
@@ -123,19 +123,21 @@ func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 					mutex.Unlock()
 				case plugins.CrackFail:
 				}
-				if r.delay > 0 {
-					time.Sleep(time.Duration(r.delay) * time.Second)
+				if r.options.Delay > 0 {
+					time.Sleep(time.Duration(r.options.Delay) * time.Second)
 				}
 				wg.Done()
 			}
 		}()
 	}
 
-	if r.silent {
+	if r.options.Silent {
 		for _, task := range tasks {
 			wg.Add(1)
 			taskChan <- task
 		}
+		close(taskChan)
+		wg.Wait()
 	} else {
 		bar := pb.StartNew(len(tasks))
 		for _, task := range tasks {
@@ -143,10 +145,10 @@ func (r *Runner) Crack(addr *IpAddr, userDict []string, passDict []string) (resu
 			wg.Add(1)
 			taskChan <- task
 		}
+		close(taskChan)
+		wg.Wait()
 		bar.Finish()
 	}
-	close(taskChan)
-	wg.Wait()
 
 	gologger.Info().Msgf("爆破结束")
 

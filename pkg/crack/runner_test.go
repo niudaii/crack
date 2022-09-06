@@ -24,14 +24,18 @@ func TestCrackAll(t *testing.T) {
 	*/
 	tests := map[string]*Runner{
 		"false": {
-			threads:  2,
-			timeout:  10,
-			crackAll: false,
+			options: &Options{
+				Threads:  1,
+				Timeout:  10,
+				CrackAll: false,
+			},
 		},
 		"true": {
-			threads:  2,
-			timeout:  10,
-			crackAll: true,
+			options: &Options{
+				Threads:  1,
+				Timeout:  10,
+				CrackAll: true,
+			},
 		},
 	}
 	addrs := []*IpAddr{
