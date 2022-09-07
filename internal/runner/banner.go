@@ -2,7 +2,7 @@ package runner
 
 import "github.com/projectdiscovery/gologger"
 
-const banner = `
+const Banner = `
                         __  
   ______________ ______/ /__
  / ___/ ___/ __  / ___/ //_/
@@ -15,5 +15,5 @@ const banner = `
 const Version = `v2.1`
 
 func showBanner() {
-	gologger.Print().Msgf("%v\n", banner)
+	gologger.Print().Msgf("%v\n", Banner)
 }

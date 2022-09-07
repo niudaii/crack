@@ -3,8 +3,8 @@ package plugins
 import (
 	"database/sql"
 	"fmt"
+	"github.com/sijms/go-ora/v2"
 	_ "github.com/sijms/go-ora/v2"
-	go_ora "github.com/sijms/go-ora/v2"
 	"strings"
 	"time"
 )
