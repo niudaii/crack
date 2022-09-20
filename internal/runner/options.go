@@ -117,6 +117,12 @@ func (o *Options) validateOptions() error {
 	if o.Delay < 0 {
 		return fmt.Errorf("delay can't be negative")
 	}
+	if o.UserFile != "" && !utils.FileExists(o.UserFile) {
+		return fmt.Errorf("file %v does not exist", o.UserFile)
+	}
+	if o.PassFile != "" && !utils.FileExists(o.PassFile) {
+		return fmt.Errorf("file %v does not exist", o.PassFile)
+	}
 
 	return nil
 }
@@ -156,7 +162,7 @@ func (o *Options) configureOptions() error {
 	o.PassDict = utils.RemoveDuplicate(o.PassDict)
 	// 打印配置
 	opt, _ := json.Marshal(o)
-	gologger.Debug().Msgf("当前配置: %v", string(opt))
+	gologger.Debug().Msgf("当前选项: %v", string(opt))
 
 	return nil
 }

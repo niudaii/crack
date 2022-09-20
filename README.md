@@ -40,9 +40,6 @@
   - memcached
   - mongodb
 - 多线程爆破，支持进度条
-- 支持彩色输出
-- 支持多种输出模式（debug|silent）
-- 全平台支持
 - 全部插件测试用例（[pkg/crack/plugins/plugins_test.go](https://github.com/niudaii/crack/blob/main/pkg/crack/plugins/plugins_test.go)）
 - API调用，可参考（[internal/runner/runner.go](https://github.com/niudaii/crack/blob/main/internal/runner/runner.go)）
 
@@ -59,7 +56,7 @@ Flags:
 INPUT:
    -i, -input string       crack service input(example: -i '127.0.0.1:3306', -i '127.0.0.1:3307|mysql')
    -f, -input-file string  crack services file(example: -f 'xxx.txt')
-   -m, -module string      choose module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb) (default "all")
+   -m, -module string      choose one module to crack(ftp,ssh,wmi,mssql,oracle,mysql,rdp,postgres,redis,memcached,mongodb) (default "all")
    -user string            user(example: -user 'admin,root')
    -pass string            pass(example: -pass 'admin,root')
    -user-file string       user file(example: -user-file 'user.txt')
@@ -83,6 +80,10 @@ DEBUG:
 ## 截图
 
 ![image-20220903092817097](https://nnotes.oss-cn-hangzhou.aliyuncs.com/notes/image-20220903092817097.png)
+
+## 说明
+
+已经停止更新，该项目作为 [zpscan](https://github.com/niudaii/zpscan) 的模块之一，后续更新参考 zpscan。
 
 ## 参考
 
